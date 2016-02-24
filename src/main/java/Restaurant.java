@@ -2,19 +2,20 @@ import org.sql2o.*;
 import java.util.List;
 
 public class Restaurant {
-  private int mId;
-  private String mName;
+  private int id;
+  private String name;
+  private int cuisine_id;
 
   public Restaurant (String name) {
-    this.mName = name;
+    this.name = name;
   }
 
   public int getId() {
-    return mId;
+    return id;
   }
 
   public String getName() {
-    return mName;
+    return name;
   }
 
   @Override
@@ -39,7 +40,9 @@ public class Restaurant {
 
   //READ
   public static List<Restaurant> all() {
+    String sql = "SELECT id, name, cuisine_id FROM Restaurants";
     try (Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Restaurant.class);
       /******************************************************
         Students: TODO: Display all restaurants on main page
       *******************************************************/
@@ -48,7 +51,7 @@ public class Restaurant {
 
   //UPDATE
   public void update(String newName) {
-    this.mName = newName;
+    this.name = newName;
     try(Connection con = DB.sql2o.open()) {
       /******************************************************
         Students: TODO: Display all restaurants on main page
