@@ -31,10 +31,13 @@ public class Restaurant {
 
   //CREATE
   public void save() {
+    String sql = "INSERT INTO restaurants(name, cuisine_id) VALUES (:name, :cuisine_id)";
     try (Connection con = DB.sql2o.open()) {
-      /******************************************************
-        Students: TODO: Display all restaurants on main page
-      *******************************************************/
+      this.id = (int) con.createQuery(sql, true)
+          .addParameter("name", name)
+          .addParameter("cuisine_id", cuisine_id)
+          .executeUpdate()
+          .getKey();
     }
   }
 
@@ -68,6 +71,15 @@ public class Restaurant {
     }
   }
 
+  public static Restaurant find(int id) {
+    String sql = "SELECT * FROM restaurants WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      Restaurant restaurant = con.createQuery(sql)
+      .addParameter("id", id)
+      .executeAndFetchFirst(Restaurant.class);
+      return restaurant;
+    }
+  }
   /******************************************************
     Students:
     TODO: Create find method

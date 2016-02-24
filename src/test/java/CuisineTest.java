@@ -21,14 +21,15 @@ public class CuisineTest {
   }
 
   @Test
-  public void equals_savesIntoDatabase_true() {
-    Cuisine newCuisine = new Cuisine("Nepali");
+  public void save_savesIntoDatabase_true() {
+    Cuisine newCuisine = new Cuisine("Nepalese");
     newCuisine.save();
-    assertTrue(newCuisine.all().get(0).equals(newCuisine));
+    Cuisine savedCuisine = Cuisine.find(newCuisine.getId());
+    assertTrue(savedCuisine.equals(newCuisine));
   }
 
   @Test
-  public void find_findCuisineInDatabase_true() {
+  public void find_findsCuisineInDatabase_true() {
     Cuisine newCuisine = new Cuisine("Nepali");
     newCuisine.save();
     assertTrue(newCuisine.all().get(0).equals(newCuisine));

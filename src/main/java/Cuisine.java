@@ -68,20 +68,21 @@ public class Cuisine {
     }
   }
 
-  public static List<Cuisine> find(int id) {
+  public static Cuisine find(int id) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM Cuisine WHERE id = :id";
-      return con.createQuery(sql)
+      String sql = "SELECT * FROM Cuisine WHERE cuisine_id = :id";
+      Cuisine cuisine = con.createQuery(sql)
         .addParameter("id", id)
-        .executeAndFetch(Cuisine.class);
+        .executeAndFetchFirst(Cuisine.class);
+        return cuisine;
     }
   }
 
   public List<Restaurant> getRestaurants() {
-    String sql = "SELECT * FROM restaurants WHERE cuisine_id = :cuisine_id";
+    String sql = "SELECT * FROM restaurants WHERE cuisine_id = :id";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
-        .addParameter("cuisine_id", cuisine_id)
+        .addParameter("id", cuisine_id)
         .executeAndFetch(Restaurant.class);
     }
   }
