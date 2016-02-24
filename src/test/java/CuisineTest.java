@@ -13,6 +13,21 @@ public class CuisineTest {
       assertEquals(Cuisine.all().size(), 0);
   }
 
+  public void all_returnsCorrectNumberOfCuisinesAfterAdd() {
+    Cuisine firstCuisine = new Cuisine("first");
+    Cuisine secondCuisine = new Cuisine("second");
+    Cuisine thirdCuisine = new Cuisine("third");
+    assertEquals(Cuisine.all().size(), 3);
+  }
+
+  public void all_returnsCorrectNumberOfCuisinesAfterDelete() {
+    Cuisine firstCuisine = new Cuisine("first");
+    Cuisine secondCuisine = new Cuisine("second");
+    Cuisine thirdCuisine = new Cuisine("third");
+    thirdCuisine.delete();
+    assertEquals(Cuisine.all().size(), 2);
+  }
+
   @Test
   public void equals_returnsTrueIfTypesAreTheSame() {
     Cuisine firstCuisine = new Cuisine("American");

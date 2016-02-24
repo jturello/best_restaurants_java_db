@@ -51,9 +51,6 @@ public class Restaurant {
     String sql = "SELECT id, name, cuisine_id FROM Restaurants";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Restaurant.class);
-      /******************************************************
-        Students: TODO: Display all restaurants on main page
-      *******************************************************/
     }
   }
 

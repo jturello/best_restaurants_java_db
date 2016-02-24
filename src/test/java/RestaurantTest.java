@@ -12,6 +12,21 @@ public class RestaurantTest {
       assertEquals(Restaurant.all().size(), 0);
   }
 
+  public void all_returnsCorrectNumberOfRestaurantsAfterAdd() {
+    Restaurant firstRestaurant = new Restaurant("first", 1);
+    Restaurant secondRestaurant = new Restaurant("second", 3);
+    Restaurant thirdRestaurant = new Restaurant("third", 2);
+    assertEquals(Restaurant.all().size(), 3);
+  }
+
+  public void all_returnsCorrectNumberOfRestaurantsAfterDelete() {
+    Restaurant firstRestaurant = new Restaurant("first", 1);
+    Restaurant secondRestaurant = new Restaurant("second", 3);
+    Restaurant thirdRestaurant = new Restaurant("third", 2);
+    thirdRestaurant.delete();
+    assertEquals(Restaurant.all().size(), 2);
+  }
+
   @Test
   public void equals_returnsTrueIfTNamesAndCuisineIdsAreTheSame() {
     Restaurant firstRestaurant = new Restaurant("SameName", 1);
