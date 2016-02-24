@@ -50,4 +50,13 @@ public class CuisineTest {
     assertTrue(newCuisine.all().get(0).equals(newCuisine));
   }
 
+  @Test
+  public void update_updatesCuisineObjectsType() {
+    Cuisine myCuisine = new Cuisine("originalType");
+    int original_id = myCuisine.getId();
+    myCuisine.update("newType");
+    assertEquals("newType", myCuisine.getType());
+    assertEquals(original_id, myCuisine.getId());
+  }
+
 }
