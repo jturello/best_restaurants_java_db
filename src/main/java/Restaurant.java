@@ -6,8 +6,9 @@ public class Restaurant {
   private String name;
   private int cuisine_id;
 
-  public Restaurant (String name) {
+  public Restaurant (String name, int cuisine_id) {
     this.name = name;
+    this.cuisine_id = cuisine_id;
   }
 
   public int getId() {
@@ -18,6 +19,10 @@ public class Restaurant {
     return name;
   }
 
+  public int getCuisine_id() {
+    return cuisine_id;
+  }
+
   @Override
   public boolean equals(Object otherRestaurant){
     if (!(otherRestaurant instanceof Restaurant)) {
@@ -25,7 +30,7 @@ public class Restaurant {
     } else {
       Restaurant newRestaurant = (Restaurant) otherRestaurant;
       return this.getName().equals(newRestaurant.getName()) &&
-        this.getId() == newRestaurant.getId();
+        this.cuisine_id == newRestaurant.getCuisine_id();
     }
   }
 

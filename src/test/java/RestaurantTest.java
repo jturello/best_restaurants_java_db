@@ -13,21 +13,21 @@ public class RestaurantTest {
   }
 
   @Test
-  public void equals_returnsTrueIfTNamesAreTheSame() {
-    Restaurant firstRestaurant = new Restaurant("SameName");
-    Restaurant secondRestaurant = new Restaurant("SameName");
+  public void equals_returnsTrueIfTNamesAndCuisineIdsAreTheSame() {
+    Restaurant firstRestaurant = new Restaurant("SameName", 1);
+    Restaurant secondRestaurant = new Restaurant("SameName", 1);
     assertTrue(firstRestaurant.equals(secondRestaurant));
   }
 
   @Test
   public void save_savesIntoDatabase_true() {
-    Restaurant myRestaurant = new Restaurant("someName");
+    Restaurant myRestaurant = new Restaurant("someName", 1);
     myRestaurant.save();
     assert(Restaurant.all().get(0).equals(myRestaurant));
   }
 
   public void find_findsRestaurantInDatabase_true() {
-    Restaurant myRestaurant = new Restaurant("someName");
+    Restaurant myRestaurant = new Restaurant("someName", 1);
     myRestaurant.save();
     Restaurant savedRestaurant = Restaurant.find(myRestaurant.getId());
     assertEquals(savedRestaurant, myRestaurant);
