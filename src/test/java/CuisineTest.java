@@ -59,4 +59,17 @@ public class CuisineTest {
     assertEquals(original_id, myCuisine.getId());
   }
 
+  @Test
+  public void update_updatesCuisineObjectsTypeOnDatabase() {
+    Cuisine myCuisine = new Cuisine("originalType");
+    myCuisine.save();
+      int originalObj_id = myCuisine.getId();
+    int originalDB_id = Cuisine.all().get(0).getId();
+    myCuisine.update("newType");
+    assertEquals("newType", Cuisine.all().get(0).getType());
+    assertEquals(originalObj_id, originalDB_id);
+    assertEquals(myCuisine.getId(), Cuisine.all().get(0).getId());
+    assertEquals(originalObj_id, Cuisine.all().get(0).getId());
+  }
+
 }

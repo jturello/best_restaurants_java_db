@@ -55,7 +55,7 @@ public class Restaurant {
   }
 
   //UPDATE
-  public void update(String newName) {
+  public void update(String newName, int newCuisine_id) {
     this.name = newName;
     try(Connection con = DB.sql2o.open()) {
       /******************************************************
