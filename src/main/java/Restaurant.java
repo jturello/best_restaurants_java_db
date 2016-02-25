@@ -49,11 +49,12 @@ public class Restaurant {
 
   //CREATE
   public void save() {
-    String sql = "INSERT INTO restaurants(name, cuisine_id) VALUES (:name, :cuisine_id)";
+    String sql = "INSERT INTO restaurants(cuisine_id, name, description) VALUES (:cuisine_id, :name, :description)";
     try (Connection con = DB.sql2o.open()) {
       this.id = (int) con.createQuery(sql, true)
-          .addParameter("name", name)
           .addParameter("cuisine_id", cuisine_id)
+          .addParameter("name", name)
+          .addParameter("description", description)
           .executeUpdate()
           .getKey();
     }
@@ -61,7 +62,7 @@ public class Restaurant {
 
   //READ
   public static List<Restaurant> all() {
-    String sql = "SELECT id, name, cuisine_id FROM Restaurants";
+    String sql = "SELECT id, cuisine_id, name, description FROM restaurants ORDER BY name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Restaurant.class);
     }
@@ -119,7 +120,7 @@ public class Restaurant {
   }
 
   public void updateDescription(String newDescription) {
-    this.description = newDescription;    
+    this.description = newDescription;
     String sql = "UPDATE restaurants SET description = :description WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)

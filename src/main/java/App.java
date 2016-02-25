@@ -1,3 +1,5 @@
+import java.util.*;
+
 import java.util.Map;
 import java.util.HashMap;
 import static spark.Spark.*;
@@ -10,11 +12,17 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
-    /******************************************************
-      Students: TODO: Display all restaurants on main page
-    *******************************************************/
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
+
+      List<Restaurant> restaurants = Restaurant.all();
+
+      if (restaurants == null) {
+        restaurants = new ArrayList<Restaurant>();
+        request.session().attribute("restaurants", restaurants);
+      }
+
+      model.put("restaurants", restaurants);
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -22,8 +30,17 @@ public class App {
     /******************************************************
     Students: TODO: Create page to add a new restaurant
     *******************************************************/
-    get("/new-restaurant", (request, reponse) -> {
+    get("/restaurants/new", (request, reponse) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
+
+      List<Cuisine> cuisines = Cuisine.all();
+
+      if (cuisines == null) {
+        cuisines = new ArrayList<Cuisine>();
+        request.session().attribute("cuisines", cuisines);
+      }
+
+      model.put("cuisines", cuisines);
       model.put("template", "templates/newrestaurant.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
