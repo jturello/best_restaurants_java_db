@@ -48,5 +48,26 @@ public class RestaurantTest {
     assertEquals(savedRestaurant, myRestaurant);
   }
 
+  @Test
+  public void update_updatesRestaurantObjectsNameAndCuisine_id_true() {
+    Restaurant myRestaurant = new Restaurant("originalName", 1);
+    myRestaurant.save();
+    String originalName = myRestaurant.getName();
+    int originalCuisineId = myRestaurant.getCuisineId();
+    myRestaurant.update("newName", 2);
+    assertEquals("newName", myRestaurant.getName());
+    assertEquals(2, myRestaurant.getCuisineId());
+  }
+
+  @Test
+  public void update_updatesRestaurantObjectsNameAndCuisine_idOnDatabase_true() {
+    Restaurant myRestaurant = new Restaurant("originalName", 1);
+    myRestaurant.save();
+    int originalObj_id = myRestaurant.getId();
+    myRestaurant.update("newName", 2);
+    assertEquals("newName", Restaurant.all().get(0).getName());
+    assertEquals(2, Restaurant.all().get(0).getCuisineId());
+    assertEquals(originalObj_id, Restaurant.all().get(0).getId());
+  }
 
 }

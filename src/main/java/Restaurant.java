@@ -57,10 +57,13 @@ public class Restaurant {
   //UPDATE
   public void update(String newName, int newCuisine_id) {
     this.name = newName;
+    this.cuisine_id = newCuisine_id;
+    String sql = "UPDATE restaurants(name, cuisine_id) VALUES (:name, :cuisine_id)";
     try(Connection con = DB.sql2o.open()) {
-      /******************************************************
-        Students: TODO: Display all restaurants on main page
-      *******************************************************/
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("cuisine_id", cuisine_id)
+        .executeUpdate();
       }
   }
 
