@@ -70,4 +70,25 @@ public class RestaurantTest {
     assertEquals(originalObj_id, Restaurant.all().get(0).getId());
   }
 
+  @Test
+  public void getCuisineType_returnsCuisineType() {
+    Cuisine myCuisine = new Cuisine("myCuisineType");
+    myCuisine.save();
+    Restaurant myRestaurant = new Restaurant("originalName", myCuisine.getId());
+    assertEquals("myCuisineType", myRestaurant.getCuisineType());
+  }
+
+  @Test
+  public void restaurant_canInstantiateWithDescription() {
+    Restaurant myRestaurant = new Restaurant("newRestaurant", 1, "restaurant description");
+    assertEquals("restaurant description", myRestaurant.getDescription());
+  }
+
+  @Test
+  public void updateDescription_setsDescription() {
+    Restaurant myRestaurant = new Restaurant("newRestaurant", 1);
+    myRestaurant.updateDescription("added description");
+    assertEquals("added description", myRestaurant.getDescription());
+  }
+
 }

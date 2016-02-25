@@ -5,10 +5,19 @@ public class Restaurant {
   private int id;
   private String name;
   private int cuisine_id;
+  private String description;
+
 
   public Restaurant (String name, int cuisine_id) {
     this.name = name;
     this.cuisine_id = cuisine_id;
+    this.description = "";
+  }
+
+  public Restaurant(String name, int cuisine_id, String description) {
+    this.name = name;
+    this.cuisine_id = cuisine_id;
+    this.description = description;
   }
 
   public int getId() {
@@ -21,6 +30,10 @@ public class Restaurant {
 
   public int getCuisineId() {
     return cuisine_id;
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   @Override
@@ -55,6 +68,21 @@ public class Restaurant {
   }
 
   //UPDATE
+  public void update(String newName, int newCuisine_id, String newDescription) {
+    this.name = newName;
+    this.cuisine_id = newCuisine_id;
+    this.description = description;
+    String sql = "UPDATE restaurants SET name = :name, cuisine_id = :cuisine_id, description = :description WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("cuisine_id", cuisine_id)
+        .addParameter("description", description)
+        .addParameter("id", id)
+        .executeUpdate();
+      }
+  }
+
   public void update(String newName, int newCuisine_id) {
     this.name = newName;
     this.cuisine_id = newCuisine_id;
@@ -63,6 +91,39 @@ public class Restaurant {
       con.createQuery(sql)
         .addParameter("name", name)
         .addParameter("cuisine_id", cuisine_id)
+        .addParameter("id", id)
+        .executeUpdate();
+      }
+  }
+
+  public void update(String newName) {
+    this.name = newName;
+    String sql = "UPDATE restaurants SET name = :name WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("id", id)
+        .executeUpdate();
+      }
+  }
+
+  public void update(int newCuisine_id) {
+    this.cuisine_id = newCuisine_id;
+    String sql = "UPDATE restaurants SET cuisine_id = :cuisine_id WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("cuisine_id", cuisine_id)
+        .addParameter("id", id)
+        .executeUpdate();
+      }
+  }
+
+  public void updateDescription(String newDescription) {
+    this.description = newDescription;    
+    String sql = "UPDATE restaurants SET description = :description WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("description", description)
         .addParameter("id", id)
         .executeUpdate();
       }
@@ -87,10 +148,9 @@ public class Restaurant {
       return restaurant;
     }
   }
-  /******************************************************
-    Students:
-    TODO: Create find method
-    TODO: Create method to get cuisine type
-  *******************************************************/
+
+  public String getCuisineType() {
+    return Cuisine.find(cuisine_id).getType();
+  }
 
 }
