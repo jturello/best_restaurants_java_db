@@ -70,10 +70,11 @@ public class Restaurant {
 
   //DELETE
   public void delete() {
+    String sql = "DELETE FROM restaurants WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
-      /******************************************************
-        Students: TODO: Display all restaurants on main page
-      *******************************************************/
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
     }
   }
 
