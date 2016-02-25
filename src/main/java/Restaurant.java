@@ -19,7 +19,7 @@ public class Restaurant {
     return name;
   }
 
-  public int getCuisine_id() {
+  public int getCuisineId() {
     return cuisine_id;
   }
 
@@ -30,7 +30,7 @@ public class Restaurant {
     } else {
       Restaurant newRestaurant = (Restaurant) otherRestaurant;
       return this.getName().equals(newRestaurant.getName()) &&
-        this.cuisine_id == newRestaurant.getCuisine_id();
+        this.cuisine_id == newRestaurant.getCuisineId();
     }
   }
 
@@ -58,11 +58,12 @@ public class Restaurant {
   public void update(String newName, int newCuisine_id) {
     this.name = newName;
     this.cuisine_id = newCuisine_id;
-    String sql = "UPDATE restaurants(name, cuisine_id) VALUES (:name, :cuisine_id)";
+    String sql = "UPDATE restaurants SET name = :name, cuisine_id = :cuisine_id WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)
         .addParameter("name", name)
         .addParameter("cuisine_id", cuisine_id)
+        .addParameter("id", id)
         .executeUpdate();
       }
   }
