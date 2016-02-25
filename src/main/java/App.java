@@ -27,9 +27,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    /******************************************************
-    Students: TODO: Create page to add a new restaurant
-    *******************************************************/
+
     get("/restaurants/new", (request, reponse) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
@@ -45,11 +43,37 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+
+    post("/restaurants", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      String restaurantName = request.queryParams("name");
+      int cuisineId = Integer.parseInt(request.queryParams("cuisineId"));
+      String description = request.queryParams("description");
+      List<Restaurant> restaurants = Restaurant.all();
+
+      Restaurant newRestaurant;
+      if (description.length() < 1) {
+        newRestaurant = new Restaurant(restaurantName, cuisineId);
+      } else {
+          newRestaurant = new Restaurant(restaurantName, cuisineId, description);
+      }
+
+      newRestaurant.save();
+      restaurants = Restaurant.all();
+      request.session().attribute("restaurants", restaurants);
+
+      model.put("restaurants", restaurants);
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
     /******************************************************
     STUDENTS:
     TODO: Create page to display information about the selected restaurant
     TODO: Create page to display restaurants by cuisine type
     *******************************************************/
 
-  }
-}
+  } // END OF MAIN
+} // END OF APP CLASS

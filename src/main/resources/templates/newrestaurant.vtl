@@ -5,8 +5,8 @@
     <label for="name">Restaurant name:</label>
     <input id="name" name="name" class="form-control" type="text" required>
 
-    <label for="cuisineType">Cuisine Type</label>
-    <input id="cuisineType" name="cuisineType" class="form-control" type="text" required>
+    <label for="cuisineId">Cuisine Id</label>
+    <input id="cuisineId" name="cuisineId" class="form-control" type="number" required>
 
     <label for="description">Description (optional)</label>
     <input id="description" name="description" class="form-control" type="text">
@@ -28,8 +28,11 @@
   </div>
 </form>
 
+
 <ul>
 #foreach ($cuisine in $cuisines)
-<li>$cuisine.getType()</li>
+  <li>
+    <a href="/cuisines/$cuisine.getId()">$cuisine.getType(), (id: $cuisine.getId())</a>
+  </li>
 #end
 </ul>
