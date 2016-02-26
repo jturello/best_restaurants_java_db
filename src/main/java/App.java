@@ -39,7 +39,7 @@ public class App {
       }
 
       model.put("cuisines", cuisines);
-      model.put("template", "templates/restaurants-cuisines.vtl");
+      model.put("template", "templates/restaurants.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -61,6 +61,54 @@ public class App {
 
       newRestaurant.save();
       restaurants = Restaurant.all();
+      request.session().attribute("restaurants", restaurants);
+
+      model.put("restaurants", restaurants);
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+    get("/restaurants/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      Restaurant restaurant = Restaurant.find(Integer.parseInt(request.params(":id")));
+      String description = "";
+      if(restaurant.getDescription() != null) {
+         description = restaurant.getDescription();
+      }
+
+      model.put("description", description);
+      model.put("restaurant", restaurant);
+      model.put("template", "templates/restaurant.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+    post("/restaurants/:id/description", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      // Restaurant restaurant = Restaurant.find(Integer.parseInt(request.params(":id")));
+      Restaurant restaurant = Restaurant.find(Integer.parseInt(request.queryParams("restaurantId")));
+      String newDescription = request.queryParams("description");
+      restaurant.updateDescription(newDescription);
+      List<Restaurant> restaurants = Restaurant.all();
+      request.session().attribute("restaurants", restaurants);
+
+      model.put("restaurant", restaurant);
+      model.put("description", newDescription);
+      model.put("template", "templates/restaurant.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+    post("/restaurants/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      Restaurant restaurant = Restaurant.find(Integer.parseInt(request.queryParams("deleteId")));
+
+      restaurant.delete();
+      List<Restaurant> restaurants = Restaurant.all();
       request.session().attribute("restaurants", restaurants);
 
       model.put("restaurants", restaurants);

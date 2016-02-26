@@ -7,7 +7,7 @@
 <ul>
 #foreach ($restaurant in $restaurants)
   <li>
-    <a href="/restaurant/$restaurant.getId()">$restaurant.getName(), ($restaurant.getCuisineType())</a>
+    <a href="/restaurants/$restaurant.getId()">$restaurant.getName() : ($restaurant.getCuisineId() - $restaurant.getCuisineType() cuisine)</a>
   </li>
 #end
 </ul>

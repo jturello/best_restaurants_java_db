@@ -62,7 +62,7 @@ public class Restaurant {
 
   //READ
   public static List<Restaurant> all() {
-    String sql = "SELECT id, cuisine_id, name, description FROM restaurants ORDER BY name";
+    String sql = "SELECT id, cuisine_id, name, description FROM restaurants ORDER BY cuisine_id, name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Restaurant.class);
     }
