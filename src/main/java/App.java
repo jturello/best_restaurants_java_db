@@ -90,5 +90,18 @@ public class App {
     TODO: Create page to display restaurants by cuisine type
     *******************************************************/
 
+  get("/cuisines/:id", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    Cuisine cuisine = Cuisine.find(Integer.parseInt(request.params(":id")));
+
+    List<Restaurant> restaurants = Restaurant.findByCuisineId(Integer.parseInt(request.params(":id")));
+
+    model.put("cuisine", cuisine);
+    model.put("restaurants", restaurants);
+    model.put("template", "templates/cuisine.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
+
   } // END OF MAIN
 } // END OF APP CLASS

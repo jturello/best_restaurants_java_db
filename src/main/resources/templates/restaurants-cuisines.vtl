@@ -28,10 +28,12 @@
   </div>
 </form>
 
+<p>Click on a link below to see all restaurants associated with the cuisine type:</p>
+
 <ul>
 #foreach ($cuisine in $cuisines)
   <li>
-    <a href="/cuisines/$cuisine.getId()">$cuisine.getType(), (id: $cuisine.getId())</a>
+    <a href="/cuisines/$cuisine.getId()">$cuisine.getType(), id: $cuisine.getId()</a>
   </li>
 #end
 </ul>

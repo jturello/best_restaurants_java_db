@@ -68,6 +68,16 @@ public class Restaurant {
     }
   }
 
+    public static List<Restaurant> findByCuisineId(int cuisine_id) {
+      String sql = "SELECT * FROM restaurants WHERE cuisine_id = :cuisine_id ORDER BY name";
+      try(Connection con = DB.sql2o.open()) {
+        List<Restaurant> restaurants = con.createQuery(sql)
+        .addParameter("cuisine_id", cuisine_id)
+        .executeAndFetch(Restaurant.class);
+        return restaurants;
+      }
+    }
+
   //UPDATE
   public void update(String newName, int newCuisine_id, String newDescription) {
     this.name = newName;

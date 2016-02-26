@@ -6,8 +6,8 @@
 
 <ul>
 #foreach ($restaurant in $restaurants)
-<li>
-  <a href="/restaurant/$restaurant.getId()">$restaurant.getName(), ($restaurant.getCuisineType())</a>
-</li>
+  <li>
+    <a href="/restaurant/$restaurant.getId()">$restaurant.getName(), ($restaurant.getCuisineType())</a>
+  </li>
 #end
 </ul>
