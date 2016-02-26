@@ -5,10 +5,10 @@
     <label for="name">Restaurant name:</label>
     <input id="name" name="name" class="form-control" type="text" required>
 
-    <label for="cuisineId">Cuisine Id</label>
+    <label for="cuisineId">Cuisine Id:</label>
     <input id="cuisineId" name="cuisineId" class="form-control" type="number" required>
 
-    <label for="description">Description (optional)</label>
+    <label for="description">Description (optional):</label>
     <input id="description" name="description" class="form-control" type="text">
   </br>
     <button type="submit" class="btn btn-info">Add New Restaurant</button>
@@ -17,17 +17,16 @@
 
 <hr>
 
-<h3 class="newRestaurant">Add a new cuisine</h3>
+<h3 class="newRestaurant">Add a new cuisine:</h3>
 
-<form class="" action="/cuisines" method="post">
+<form action="/cuisines" method="post">
   <div class="form-group">
-    <label for="cuisineType">Enter text</label>
+    <label for="cuisineType">Enter cuisine type:</label>
     <input id="cuisineType" name="cuisineType" class="form-control" type="text" required>
   </br>
     <button type="submit" class="btn btn-info">Add New Cuisine</button>
   </div>
 </form>
-
 
 <ul>
 #foreach ($cuisine in $cuisines)

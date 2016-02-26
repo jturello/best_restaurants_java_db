@@ -39,7 +39,7 @@ public class App {
       }
 
       model.put("cuisines", cuisines);
-      model.put("template", "templates/newrestaurant.vtl");
+      model.put("template", "templates/restaurants-cuisines.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -68,6 +68,21 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+
+    post("/cuisines", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      String cuisineType = request.queryParams("cuisineType");
+      Cuisine newCuisine = new Cuisine(cuisineType);
+
+      newCuisine.save();
+      List<Cuisine> cuisines = Cuisine.all();
+      request.session().attribute("cuisines", cuisines);
+
+      model.put("cuisines", cuisines);
+      model.put("template", "templates/restaurants-cuisines.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
     /******************************************************
     STUDENTS:
